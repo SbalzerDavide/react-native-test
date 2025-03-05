@@ -1,11 +1,11 @@
 import React, { useContext } from "react";
-import { HStack, Icon, Pressable, Text, VStack } from "../components/ui";
-import ListYourPlaceModal from "./main-content/ListYourPlaceModal";
-import MobileSidebarActionsheet from "./MobileSidebarActionsheet";
-import { ThemeContext } from "@/App";
+import { HStack } from "@/components/ui/hstack";
+import { Icon } from "@/components/ui/icon";
+import { Pressable } from "@/components/ui/pressable";
+import { Text } from "@/components/ui/text";
+import { VStack } from "@/components/ui/vstack";
 
 const MobileBottomTabs = ({ bottomTabs, activeTab, setActiveTab }: any) => {
-  const { colorMode } = useContext(ThemeContext);
   const [modalVisible, setModalVisible] = React.useState(false);
   const [actionsheetVisible, setActionsheetVisible] = React.useState(false);
 
@@ -34,7 +34,7 @@ const MobileBottomTabs = ({ bottomTabs, activeTab, setActiveTab }: any) => {
               <VStack className="items-center">
                 <Icon
                   as={tab.icon}
-                  size={20}
+                  size={'sm'}
                   className={`${
                     activeTab === tab.label
                       ? "text-typography-900"
@@ -56,16 +56,6 @@ const MobileBottomTabs = ({ bottomTabs, activeTab, setActiveTab }: any) => {
           );
         })}
       </HStack>
-
-      <ListYourPlaceModal
-        modalVisible={modalVisible}
-        setModalVisible={setModalVisible}
-      />
-
-      <MobileSidebarActionsheet
-        actionsheetVisible={actionsheetVisible}
-        setActionsheetVisible={setActionsheetVisible}
-      />
     </>
   );
 };
