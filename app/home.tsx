@@ -42,7 +42,9 @@ const Homepage = () => {
   return (
     <>
       <Box className="flex-1">
-
+        <Box className="flex-1 justify-center items-center">
+          <Text className="text-typography-900 text-2xl">Homepage</Text>
+        </Box>
         {/* mobile bottom tabs */}
         <Box className="h-[72px] items-center w-full flex md:hidden border-t border-outline-50">
           <MobileBottomTabs
