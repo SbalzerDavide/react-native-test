@@ -1,13 +1,13 @@
 import React from "react";
-import { Stack } from "expo-router";
+import { Stack, Tabs } from "expo-router";
 
 import "@/global.css";
 import { GluestackUIProvider } from "@/components/ui/gluestack-ui-provider";
 import { SafeAreaView } from "react-native";
 import * as Linking from "expo-linking";
-import Homepage from "./(tabs)/home";
-import { Text } from "react-native";
 import { Box } from "@/components/ui/box";
+import { Icon } from "@/components/ui/icon";
+
 import MobileBottomTabs from "@/components/mobile-bottom-tabs";
 
 import {
@@ -60,7 +60,7 @@ const bottomTabs = [
   },
 ];
 
-export default function RootLayout() {
+export default function TabsLayout() {
   const [colorMode, setColorMode] = React.useState<"dark" | "light">(
     defaultTheme
   );
@@ -73,47 +73,50 @@ export default function RootLayout() {
   return (
     <>
       {/* top SafeAreaView */}
-      {/* <SafeAreaView
-        className={`${colorMode === "light" ? "bg-[#E5E5E5]" : "bg-[#262626]"}`}
-      />
-      <ThemeContext.Provider value={{ colorMode, toggleColorMode }}>
-        <GluestackUIProvider mode={colorMode}>
-          <SafeAreaView
-            className={`${
-              colorMode === "light" ? "bg-white" : "bg-[#171717]"
-            } flex-1 overflow-hidden`}
-          >
-            <Box className="flex-1">
-              <Stack screenOptions={{ headerShown: false }}>
-                <Stack.Screen
-                  name="(tabs)"
-                  options={{
-                    headerShown: false
-                  }}
-                  />
-                <Stack.Screen
-                name="not-found" />
-              </Stack>
-              <Box className="h-[72px] items-center w-full flex md:hidden border-t border-outline-50">
+      <GluestackUIProvider mode={colorMode}>
+        <Tabs
+          screenOptions={{
+            tabBarActiveTintColor: "#e91e63",
+            // headerStyle: { height: 50 }, // Adjust header height
+            // headerTitleStyle: { color: colorMode === "light" ? "#000" : "#fff" }, // Ensure header text is visible
+          }}
+        >
+          <Tabs.Screen
+            name="index"
+            options={{
+              headerTitle: "My homepage",
+              // prevent the back button from showing
+              headerLeft: () => <></>,
+            }}
+          />
+          <Tabs.Screen
+            name="home"
+            options={{
+              headerTitle: "My homepage",
+              tabBarIcon: ({ color }) => (
+                <Icon as={Home} size={"sm"} color={color} />
+              ),
+            }}
+          />
+          <Tabs.Screen
+            name="about"
+            options={{
+              headerTitle: "My about screen",
+              tabBarIcon: ({ color }) => (
+                <Icon as={User} size={"sm"} color={color} />
+              ),
+              // presentation: "modal",
+            }}
+          />
+        </Tabs>
+        {/* <Box className="h-[72px] items-center w-full flex md:hidden border-t border-outline-50">
                 <MobileBottomTabs
                   activeTab={activeTab}
                   setActiveTab={setActiveTab}
                   bottomTabs={bottomTabs}
                 />
-              </Box>
-            </Box>
-          </SafeAreaView>
-        </GluestackUIProvider>
-      </ThemeContext.Provider> */}
-      <Stack screenOptions={{ headerShown: false }}>
-        <Stack.Screen
-          name="(tabs)"
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen name="not-found" />
-      </Stack>
+              </Box> */}
+      </GluestackUIProvider>
     </>
   );
 }

@@ -1,6 +1,6 @@
-import { Text } from "react-native";
+import { Text, View } from "react-native";
 import { Box } from "@/components/ui/box";
-import MobileBottomTabs from "./mobile-bottom-tabs"
+import MobileBottomTabs from "../../components/mobile-bottom-tabs";
 
 import {
   Plus,
@@ -41,20 +41,9 @@ const Homepage = () => {
 
   return (
     <>
-      <Box className="flex-1">
-        <Box className="flex-1 justify-center items-center">
-          <Text className="text-typography-900 text-2xl">Homepage</Text>
-        </Box>
-        {/* mobile bottom tabs */}
-        <Box className="h-[72px] items-center w-full flex md:hidden border-t border-outline-50">
-          <MobileBottomTabs
-            activeTab={activeTab}
-            setActiveTab={setActiveTab}
-            bottomTabs={bottomTabs}
-          />
-        </Box>
+      <Box className="flex-1 justify-center items-center">
+        <Text className="text-typography-900 text-2xl">Homepage</Text>
       </Box>
-      {/* )} */}
     </>
   );
 };

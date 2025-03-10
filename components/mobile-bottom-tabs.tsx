@@ -4,6 +4,7 @@ import { Icon } from "@/components/ui/icon";
 import { Pressable } from "@/components/ui/pressable";
 import { Text } from "@/components/ui/text";
 import { VStack } from "@/components/ui/vstack";
+import { Link } from "expo-router";
 
 const MobileBottomTabs = ({ bottomTabs, activeTab, setActiveTab }: any) => {
   const [modalVisible, setModalVisible] = React.useState(false);
@@ -31,27 +32,29 @@ const MobileBottomTabs = ({ bottomTabs, activeTab, setActiveTab }: any) => {
               //@ts-ignore
               opacity={tab.disabled ? 0.5 : 1}
             >
-              <VStack className="items-center">
-                <Icon
-                  as={tab.icon}
-                  size={'sm'}
-                  className={`${
-                    activeTab === tab.label
-                      ? "text-typography-900"
-                      : "text-typography-400"
-                  }`}
-                />
-                <Text
-                  size="xs"
-                  className={`${
-                    activeTab === tab.label
-                      ? "text-typography-900"
-                      : "text-typography-400"
-                  }`}
-                >
-                  {tab.label}
-                </Text>
-              </VStack>
+              <Link href={tab.route || ""}>
+                <VStack className="items-center">
+                  <Icon
+                    as={tab.icon}
+                    size={"sm"}
+                    className={`${
+                      activeTab === tab.label
+                        ? "text-typography-900"
+                        : "text-typography-400"
+                    }`}
+                  />
+                  <Text
+                    size="xs"
+                    className={`${
+                      activeTab === tab.label
+                        ? "text-typography-900"
+                        : "text-typography-400"
+                    }`}
+                  >
+                    {tab.label}
+                  </Text>
+                </VStack>
+              </Link>
             </Pressable>
           );
         })}
