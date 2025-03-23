@@ -1,23 +1,12 @@
-import React from "react";
-import { Stack } from "expo-router";
+import React, { useEffect } from "react";
+import { Stack, router } from "expo-router";
 
 import "@/global.css";
 import { GluestackUIProvider } from "@/components/ui/gluestack-ui-provider";
 import { SafeAreaView } from "react-native";
 import * as Linking from "expo-linking";
-import Homepage from "./(tabs)/home";
-import { Text } from "react-native";
-import { Box } from "@/components/ui/box";
-import MobileBottomTabs from "@/components/mobile-bottom-tabs";
-
-import {
-  Plus,
-  Home,
-  MessageCircle,
-  User,
-  SlidersHorizontal,
-} from "lucide-react-native";
-import { SessionProvider } from "@/components/provider/session.provider";
+import AuthProvider, { useAuth }  from "@/components/provider/auth.provider";
+import { useStorageState } from "@/components/provider/useStorageState";
 
 let defaultTheme: "dark" | "light" = "light";
 
@@ -35,32 +24,6 @@ export const ThemeContext = React.createContext<ThemeContextType>({
   toggleColorMode: () => {},
 });
 
-const bottomTabs = [
-  {
-    icon: Home,
-    label: "Home",
-    route: "home",
-  },
-  {
-    icon: User,
-    label: "About",
-    route: "about",
-  },
-  {
-    icon: Plus,
-    label: "Listing",
-  },
-  {
-    icon: MessageCircle,
-    label: "Inbox",
-    disabled: true,
-  },
-  {
-    icon: SlidersHorizontal,
-    label: "Profile",
-  },
-];
-
 export default function RootLayout() {
   const [colorMode, setColorMode] = React.useState<"dark" | "light">(
     defaultTheme
@@ -69,12 +32,26 @@ export default function RootLayout() {
   const toggleColorMode = async () => {
     setColorMode((prev) => (prev === "light" ? "dark" : "light"));
   };
-  const [activeTab, setActiveTab] = React.useState("Home");
+
+  // const { token } = useAuth(); 
+  const [[loading, token], setToken] = useStorageState('token');
+  
+
+  useEffect(() => {
+    console.log("effect inside layout");
+    console.log("token", token);
+    
+    
+    if (!token) {
+      console.log("Token not found, redirecting to login...");
+      router.push("/login");
+    }
+  }, [token]); // Esegui l'effetto quando il token cambia
+
 
   return (
     <>
-      <SessionProvider>
-        {/* top SafeAreaView */}
+      <AuthProvider>
         <SafeAreaView
           className={`${
             colorMode === "light" ? "bg-[#E5E5E5]" : "bg-[#262626]"
@@ -100,7 +77,7 @@ export default function RootLayout() {
             </SafeAreaView>
           </GluestackUIProvider>
         </ThemeContext.Provider>
-      </SessionProvider>
+      </AuthProvider>
     </>
   );
 }
